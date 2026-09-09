@@ -13,8 +13,8 @@ const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
 
 // controller Imports
-const authController = require("./routes/auth.controllers.js");
-const indexController = require("./routes/index.controllers.js");
+const authController = require("./routes/auth.routes.js");
+const indexController = require("./routes/index.routes.js");
 
 
 // Middleware
