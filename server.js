@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config() //this allows me to use my .env values
 const morgan = require('morgan')
 const session = require('express-session');
 const methodOverride = require('method-override')
-const {MongoStore} = require("connect-mongo");
+const { MongoStore } = require("connect-mongo");
 const connectToDB = require('./db.js')
 
 // middleware imports
@@ -15,6 +15,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 // routes Imports
 const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
+const entriesRouter = require("./routes/entries.routes.js")
 
 
 // Middleware
@@ -29,8 +30,8 @@ app.use(
     saveUninitialized: true,
 
     store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    collectionName: "sessions"
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: "sessions"
     }),
 
     cookie: {
@@ -51,21 +52,21 @@ app.use(passUserToView)
 
 
 // Routes go here
-app.use('/auth',authController)
-app.use('/',indexController)
-
+app.use('/auth', authController)
+app.use('/', indexController)
+app.use('/entries', entriesRouter)
 
 
 
 
 // connect to database and listen on Port 3000
 async function startServer() {
-    const PORT = process.env.PORT || 3000;
-    await connectToDB();
+  const PORT = process.env.PORT || 3000;
+  await connectToDB();
 
-    app.listen(PORT, () => {
-        console.log(`App is running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`App is running on port ${PORT}`);
+  });
 }
 
 startServer();
