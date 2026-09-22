@@ -26,6 +26,15 @@
                             <p>
                                 <%= entry.entryBody %>
                             </p>
+
+                            <!-- أزرار التحكم تظهر فقط للمالك -->
+                            <% if (user && entry.owner.equals(user._id)) { %>
+                                <a href="/entries/<%= entry._id %>/edit">Edit</a>
+                                <form action="/entries/<%= entry._id %>?_method=DELETE" method="POST"
+                                    style="display: inline;">
+                                    <button type="submit">Delete</button>
+                                </form>
+                                <% } %>
                         </li>
                         <% }) %>
                 </ul>
